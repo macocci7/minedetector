@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="content-language" content="ja">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <script type="text/javascript" src="./js/jquery/jquery-1.12.3.min.js"></script>
+        <script type="text/javascript" src="./js/jquery/jquery.cookie.js"></script>
+        <script type="text/javascript" src="./js/jquery/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="./js/util.js" charset="UTF-8"></script>
+        <script type="text/javascript" src="./js/jkl-dumper.js" charset="UTF-8"></script>
+        <script type="text/javascript" src="./js/minedetector.js" charset="UTF-8"></script>
+        <script type="text/javascript" src="./js/minedetector.autoplay.js" charset="UTF-8"></script>
+        <link rel="stylesheet" type="text/css" href="./css/minedetector.css" />
+        <link rel="stylesheet" type="text/css" href="./css/jquery-ui.min.css" />
+        <title>マインディテクター</title>
+    </head>
+    <body>
+        <noscript>
+            <p>
+                このサイトは JavaScript を使用しています。<br />
+                JavaScript を有効にしてご覧ください。
+            </p>
+        </noscript>
+        <div>
+        <p><strong>header</strong></p>
+        <h1>マインディテクター</h1>
+        <p>
+            Width: <input id="iWidth" name="iWidth" type="text" value="30" />
+             / Height: <input id="iHeight" name="iHeight" type="text" value="16" />
+             / Mines: <input id="iMines" name="iMines" type="text" value="99" />
+             / Closed Panels: <span id="iRemain">480</span>
+             / Flags: <span id="iFlags">0</span>
+             / Time: <span id="iSec">0</span>
+        </p>
+        <div id="input-rankers-name" title="ハイスコア">
+            <form>
+                <fieldset>
+                    <p>名前を入力してください。</p>
+                        <label for="ranker">名前</label>
+                        <input type="text" name="ranker" id="ranker" class="text ui-widget-content ui-corner-all" />
+                    </p>
+                </fieldset>
+            </form>
+        </div>
+        <div id="show-theory-log" title="セオリー適用統計">
+        </div>
+        <p id="highscores">
+            HighScore: 
+               1:<span id="hs1"></span>
+             / 2:<span id="hs2"></span>
+             / 3:<span id="hs3"></span>
+        </p>
+        <p><span class="reset">RESET</span>　<span class="pause invisible"></span><span class="restart invisible"></span><span class="autoplay">AUTO PLAY</span>　<input type="checkbox" name="clickrandom" id="clickrandom" value="1" />Click radom panel if stalemated.　[<span class="showTheoryLog">show theory log</span>]　[<span class="clearTheoryLog">clear theory log</span>]</p>
+        <p>
+            <table id="MineField">
+                <tbody>
+                </tbody>
+            </table>
+        </p>
+        <hl />
+
+                <hl />
+            <p><copyright>macocci7.net</copyright></p>
+            <p><strong>footer</strong></p>
+        </div>
+    </body>
+</html>
