@@ -9,18 +9,15 @@ table{
     border: 1px #000000 solid;
     border-collapse: collapse;
     padding: 0;
-    spacing: 0;
 }
 tr {
     border: 1px #000000 solid;
     padding: 0;
-    spacing: 0;
 }
 td {
     border: 1px #000000 solid;
     background: #dddddd;
-    padding: 4;
-    spacing: 0;
+    /*padding: 4;*/
     width: 20px;
     height: 20px;
     text-align: center;
@@ -47,8 +44,10 @@ td[v="7"] { color:#333333; font-weight: bold; }
 td[v="8"] { color:#663333; font-weight: bold; }
 td.red { background-color: #ff0000; }
 td.flag {
+    padding: 0px;
     color: #ff0000;
     font-weight:bold;
+    background-image: url(./img/flag.png);
     background-color: #ffcc00;
 }
 

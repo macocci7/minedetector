@@ -12,6 +12,8 @@ $(function(){
     var STR_BOMB = '●';
     var STR_FLAG = 'Ｆ';
     var STR_WRONG_FLAG = '×';
+    var STR_IMG_BOMB = 'img/mine.png';
+    var STR_IMG_FLAG = 'img/flag.png';
     var STR_PAUSE = "PAUSE";
     var STR_RESTART = "RESTART";
     var iWidth = 30;
@@ -44,23 +46,6 @@ $(function(){
     var iHsRankers = 3;
     var iHsNameMaxLength = 16;
     $.cookie.json = true;
-    
-    /***
-    objHighScores = {
-                        "w30h20": {
-                            1: { "name": "hoge", "time": 12 },
-                            2: { "name": "hage", "time": 14 },
-                            3: { "name": "huge", "time": 16 }
-                        },
-                        "w50h20": {
-                            1: { "name": "hoga", "time": 32 },
-                            2: { "name": "haga", "time": 35 },
-                            3: { "name": "huga", "time": 36 }
-                        }
-                    };
-    $.cookie('highscores', objHighScores);
-    objHighScores = $.cookie('highscores');
-    ***/
     
     init();
     
@@ -279,7 +264,8 @@ $(function(){
             var y = parseInt($(this).attr("y"), 10);
             var v = arrField[x][y];
             if (v == -1) {
-                $(this).removeClass("hide").attr("v", v).text(STR_BOMB);
+                //$(this).removeClass("hide").attr("v", v).text(STR_BOMB);
+                $(this).removeClass("hide").attr("v", v).html('<img src="'+STR_IMG_BOMB+'" width="16" height="16" alt="'+STR_BOMB+'" />');
             }
         });
         $.each($("td.flag"), function(){
@@ -301,13 +287,14 @@ $(function(){
             // remove a flag
             var v = arrField[x][y];
             arrReveal[x][y]=0;
-            //$(Target).text(v).removeClass("flag");
-            $(Target).text("").removeClass("flag");
+            //$(Target).text("").removeClass("flag");
+            $(Target).html("").removeClass("flag");
             iFlags--;
         } else if ($(Target).hasClass("hide")) {
             // set a flag
             arrReveal[x][y]=-1;
-            $(Target).text(STR_FLAG).addClass("flag");
+            //$(Target).text(STR_FLAG).addClass("flag");
+            $(Target).append('<img src="'+STR_IMG_FLAG+'" alt="'+STR_FLAG+'" width="10" height="10" />').addClass("flag");
             iFlags++;
         }
         $("#iFlags").text(iFlags);
@@ -428,37 +415,45 @@ $(function(){
     }
     
     function registHighScore() {
-        var stRanker = validateRankerName($("input#ranker").val());
         var stHsClass = getHighScoreClassName();
-        var objTmp = {};
-        var isSet = false;
-        var i = 1;
-        if (typeof objHighScores[stHsClass] === "undefined") {
-            objHighScores[stHsClass] = { 1: { "name": stRanker, "time": iSec } };
-        } else {
-            var objHs = objHighScores[stHsClass];
-            while (i <= iHsRankers) {
-                if (typeof objHs[i] === "undefined") {
-                    if (isSet === false) {
-                        objTmp[i] = { "name": stRanker, "time": iSec };
-                        isSet = true;
-                    }
-                    break;
-                }
-                if (iSec >= objHs[i].time && isSet === false) {
-                    objTmp[i] = objHs[i];
-                } else if (iSec < objHs[i].time && isSet === false) {
-                    objTmp[i] = { "name": stRanker, "time": iSec };
-                    isSet = true;
-                } else if (isSet === true) {
-                    objTmp[i] = objHs[i-1];
-                }
-                i++;
-            }
-            objHighScores[stHsClass] = objTmp;
-        }
+        objHighScores[stHsClass] = getNewHighScores(stHsClass);
         saveHighScores();
         showHighScores();
+    }
+
+    function getNewHighScores(stHsClass) {
+        var stRanker = validateRankerName($("input#ranker").val());
+        var isSet = false;
+        var i = 0;
+        var objTmp = {};
+        if (typeof objHighScores[stHsClass] === "undefined") {
+            return { 1: { "name": stRanker, "time": iSec } };
+        }
+        var objHs = objHighScores[stHsClass];
+        while (i < iHsRankers) {
+            i++;
+            if (typeof objHs[i] === "undefined") {
+                if (isSet === false) {
+                    objTmp[i] = { "name": stRanker, "time": iSec };
+                    isSet = true;
+                    continue;
+                }
+                if (typeof objHs[i-1] === "undefined") {
+                    break;
+                }
+                objTmp[i] = objHs[i-1];
+                continue;
+            }
+            if (iSec >= objHs[i].time) {
+                objTmp[i] = objHs[i];
+            } else if (iSec < objHs[i].time && isSet === false) {
+                objTmp[i] = { "name": stRanker, "time": iSec };
+                isSet = true;
+            } else {
+                objTmp[i] = objHs[i-1];
+            }
+        }
+        return objTmp;
     }
     
     function saveHighScores() {
