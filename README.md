@@ -14,6 +14,8 @@ I'm going to remake this with Vue.js someday.
 
 You can use this game freely after cloning this repository and deploy it on a web server anywhere you like, and can customize it as you like.
 
+Demo site: [https://macocci7.net/minedetector/](https://macocci7.net/minedetector/)
+
 License: MIT
 
 Copyright 2016 - 2023 macocci7
